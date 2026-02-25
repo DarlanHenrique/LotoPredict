@@ -13,15 +13,16 @@ return new class extends Migration
     {
         Schema::create('lottery_results', function (Blueprint $table) {
             $table->id();
+            $table->index();
             $table->foreignId('lottery_game_id')->constrained()->cascadeOnDelete();
             $table->integer('contest_number');
             $table->date('draw_date');
-            $table->integer('n1');
-            $table->integer('n2');
-            $table->integer('n3');
-            $table->integer('n4');
-            $table->integer('n5');
-            $table->integer('n6');
+            $table->unsignedTinyInteger('n1');
+            $table->unsignedTinyInteger('n2');
+            $table->unsignedTinyInteger('n3');
+            $table->unsignedTinyInteger('n4');
+            $table->unsignedTinyInteger('n5');
+            $table->unsignedTinyInteger('n6');
             $table->json('extra_data')->nullable();
             $table->timestamps();
 
