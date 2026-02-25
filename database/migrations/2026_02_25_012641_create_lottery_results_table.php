@@ -16,7 +16,12 @@ return new class extends Migration
             $table->foreignId('lottery_game_id')->constrained()->cascadeOnDelete();
             $table->integer('contest_number');
             $table->date('draw_date');
-            $table->json('drawn_numbers');
+            $table->integer('n1');
+            $table->integer('n2');
+            $table->integer('n3');
+            $table->integer('n4');
+            $table->integer('n5');
+            $table->integer('n6');
             $table->json('extra_data')->nullable();
             $table->timestamps();
 
