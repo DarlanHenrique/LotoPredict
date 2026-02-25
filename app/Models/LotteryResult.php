@@ -11,12 +11,11 @@ class LotteryResult extends Model
         'lottery_game_id',
         'contest_number',
         'draw_date',
-        'drawn_numbers',
+        'n1', 'n2', 'n3', 'n4', 'n5', 'n6',
         'extra_data',
     ];
 
     protected $casts = [
-        'drawn_numbers' => 'array',
         'extra_data' => 'array',
         'draw_date' => 'date',
     ];
