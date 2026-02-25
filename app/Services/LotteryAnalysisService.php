@@ -30,8 +30,13 @@ class LotteryAnalysisService
         $frequency = [];
 
         foreach ($results as $result) {
-            foreach ($result->drawn_numbers as $number) {
-                $frequency[$number] = ($frequency[$number] ?? 0) + 1;
+            // Agrupamos as novas colunas em um array para análise
+            $drawn = [$result->n1, $result->n2, $result->n3, $result->n4, $result->n5, $result->n6];
+            
+            foreach ($drawn as $number) {
+                if ($number > 0) {
+                    $frequency[$number] = ($frequency[$number] ?? 0) + 1;
+                }
             }
         }
 
