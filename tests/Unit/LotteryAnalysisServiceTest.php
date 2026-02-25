@@ -14,7 +14,6 @@ class LotteryAnalysisServiceTest extends TestCase
     use RefreshDatabase;
 
     private LotteryAnalysisService $service;
-
     private LotteryGame $game;
 
     protected function setUp(): void
@@ -38,7 +37,7 @@ class LotteryAnalysisServiceTest extends TestCase
             'lottery_game_id' => $this->game->id,
             'contest_number' => 1,
             'draw_date' => now()->subDays(7),
-            'drawn_numbers' => [1, 5, 10, 20, 30, 40],
+            'n1' => 1, 'n2' => 2, 'n3' => 3, 'n4' => 4, 'n5' => 5, 'n6' => 6,
         ]);
 
         $frequency = $this->service->getNumberFrequency($this->game);
@@ -55,7 +54,7 @@ class LotteryAnalysisServiceTest extends TestCase
             'lottery_game_id' => $this->game->id,
             'contest_number' => 1,
             'draw_date' => now()->subDays(7),
-            'drawn_numbers' => [1, 5, 10, 20, 30, 40],
+            'n1' => 1, 'n2' => 2, 'n3' => 3, 'n4' => 4, 'n5' => 5, 'n6' => 6,
         ]);
 
         $hotNumbers = $this->service->getMostFrequentNumbers($this->game, 6);
@@ -70,17 +69,27 @@ class LotteryAnalysisServiceTest extends TestCase
         $this->assertArrayHasKey('total_draws', $stats);
         $this->assertArrayHasKey('total_combinations', $stats);
         $this->assertArrayHasKey('probability_per_draw', $stats);
+        // C(60, 6) = 50.063.860
         $this->assertEquals(50063860, $stats['total_combinations']);
     }
 
     public function test_generate_frequency_prediction_returns_correct_count(): void
     {
         for ($i = 1; $i <= 5; $i++) {
+            $numbers = array_rand(array_flip(range(1, 60)), 6);
+            sort($numbers); 
+
             LotteryResult::create([
                 'lottery_game_id' => $this->game->id,
                 'contest_number' => $i,
                 'draw_date' => now()->subDays($i * 7),
-                'drawn_numbers' => array_rand(array_flip(range(1, 60)), 6),
+                'n1' => $numbers[0],
+                'n2' => $numbers[1],
+                'n3' => $numbers[2],
+                'n4' => $numbers[3],
+                'n5' => $numbers[4],
+                'n6' => $numbers[5],
+                'extra_data' => [],
             ]);
         }
 
